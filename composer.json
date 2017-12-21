@@ -1,0 +1,17 @@
+{
+  "name": "DannyX/SPaceX",
+  "description": "SPaceX V0.0.0",
+  "minimum-stability": "alpha",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "DannyX",
+      "email": "daniel.glez1993@gmail.com"
+    }
+  ],
+  "require": {
+    "doctrine/orm": "*",
+    "slim/slim": "3.9.2",
+    "firebase/php-jwt": "5.0.0"
+  }
+}
