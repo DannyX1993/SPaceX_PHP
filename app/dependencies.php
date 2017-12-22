@@ -70,5 +70,9 @@ $container['\controllers\UsersController'] = function (\Interop\Container\Contai
     $repository = new \models\repositories\UsersRepository($c->get('em'));
     return new \controllers\UsersController($repository);
 };
+$container['\controllers\PlanetsController'] = function (\Interop\Container\ContainerInterface $c) {
+    $repository = new \models\repositories\PlanetsRepository($c->get('em'));
+    return new \controllers\PlanetsController($repository);
+};
 
 ?>

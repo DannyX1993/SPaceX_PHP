@@ -11,5 +11,5 @@ include_once 'config.php';
 include_once 'dependencies.php';
 include_once 'routes.php';
 $app->run();
-//$app->stop();
+$app->stop();
 ?>

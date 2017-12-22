@@ -2,17 +2,24 @@
 
 namespace models\repositories;
 
+use \Doctrine\ORM\EntityManager as EntityManager;
+
+use \models\repositories\PlanetsRepository as PlanetsRepository;
+
+use models\entities\PlanetEntity;
 use \models\entities\UserEntity as UserEntity;
 
 class UsersRepository extends AbstractRepository
 {
 
     protected $_entity;
+    protected $_planetRepository;
 
-    public function __construct(\Doctrine\ORM\EntityManager &$em)
+    public function __construct(EntityManager &$em)
     {
         parent::__construct($em);
         $this->_entity = $this->_em->getRepository('\models\entities\UserEntity');
+        $this->_planetRepository = new PlanetsRepository($this->_em);
     }
 
     public function insert(string $nick, string $email, string $password)
@@ -23,19 +30,29 @@ class UsersRepository extends AbstractRepository
             $User = $this->_findOneBy(array('email' => $email));
 
             if ($User === null) {
-                $time = time();
-                $User = new UserEntity();
-                $User->setCreated($time);
-                $User->setEmail($email);
-                $User->setNickname($nick);
-                $User->setPassword(hash("sha256", $password));
-                $User->setHolidaysMode(false);
-                $User->setLastAccess($time);
+                $this->_em->getConnection()->beginTransaction();
 
-                // TODO -> DAR DE ALTA PLANETA PRINCIPAL
+                try {
+                    $time = time();
+                    $User = new UserEntity();
+                    $User->setCreated($time);
+                    $User->setEmail($email);
+                    $User->setNickname($nick);
+                    $User->setPassword(hash("sha256", $password));
+                    $User->setHolidaysMode(false);
+                    $User->setLastAccess($time);
+                    $this->_em->persist($User);
 
-                $this->_em->persist($User);
-                $this->_em->flush();
+                    // Damos de alta el planeta principal
+                    $this->_planetRepository->generateFirstPlanet($User);
+
+                    $this->_em->flush();
+                    $this->_em->getConnection()->commit();
+                } catch (\Exception $e) {
+                    $this->_em->getConnection()->rollBack();
+                    throw $e;
+                }
+
                 return $User;
             }
         }
@@ -51,11 +68,6 @@ class UsersRepository extends AbstractRepository
             $this->_em->flush();
         }
         return $User;
-    }
-
-    public function findByNicknameOrEmail(string $nick, string $email)
-    {
-
     }
 
     public function findById(string $id)
