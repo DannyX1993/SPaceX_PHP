@@ -5,7 +5,6 @@ namespace api;
 use Psr\Http\Message\ServerRequestInterface as ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface as ResponseInterface;
 use wrappers\JSONPlanetWrapper;
-use wrappers\JSONUserPlanetsWrapper;
 
 class PlanetsResource extends AbstractResource
 {

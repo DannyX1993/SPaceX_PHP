@@ -11,8 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 class PlanetEntity
 {
 
-    // TODO -> CAMPOS OCUPADOS Y CAMPOS MÁXIMOS
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -25,6 +23,9 @@ class PlanetEntity
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
+
+    // TODO -> planeta, luna y ¿escombros?
+    protected $type;
 
     /**
      * @ORM\Column(type="string", nullable=false, length=50, options={"default":"Planeta principal"})
@@ -60,6 +61,26 @@ class PlanetEntity
      * @ORM\Column(type="integer", nullable=false, options={"default":0})
      **/
     protected $maxEnergy;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false, options={"default":0})
+     **/
+    protected $minTemp;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false, options={"default":0})
+     **/
+    protected $maxTemp;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false, options={"default":0})
+     **/
+    protected $currFields;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false, options={"default":0})
+     **/
+    protected $maxFields;
 
 
     public function getId()
@@ -100,6 +121,26 @@ class PlanetEntity
     public function getMaxEnergy()
     {
         return $this->maxEnergy;
+    }
+
+    public function getMinTemp()
+    {
+        return $this->minTemp;
+    }
+
+    public function getMaxTemp()
+    {
+        return $this->maxTemp;
+    }
+
+    public function getCurrFields()
+    {
+        return $this->currFields;
+    }
+
+    public function getMaxFields()
+    {
+        return $this->maxFields;
     }
 
     public function isMain()
@@ -145,6 +186,26 @@ class PlanetEntity
     public function setMaxEnergy(float $energy)
     {
         $this->maxEnergy = $energy;
+    }
+
+    public function setMinTemp(int $temp)
+    {
+        $this->minTemp = $temp;
+    }
+
+    public function setMaxTemp(int $temp)
+    {
+        $this->maxTemp = $temp;
+    }
+
+    public function setCurrFields(int $fields)
+    {
+        $this->currFields = $fields;
+    }
+
+    public function setMaxFields(int $fields)
+    {
+        $this->maxFields = $fields;
     }
 
     public function setMain($bool)

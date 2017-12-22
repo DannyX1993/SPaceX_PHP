@@ -9,9 +9,10 @@
 namespace models\repositories;
 
 use \Doctrine\ORM\EntityManager as EntityManager;
-use models\entities\UserEntity;
-use models\entities\PlanetEntity;
+use \models\entities\PlanetEntity;
+use \models\entities\UserEntity;
 
+use \config\Config as Config;
 
 class PlanetsRepository extends AbstractRepository
 {
@@ -30,13 +31,15 @@ class PlanetsRepository extends AbstractRepository
         $Planet->setUser($params['User']);
         $Planet->setName('Planet Principal');
         $Planet->setMain($params['main']);
-        $Planet->setMetal(500);
-        $Planet->setCrystal(500);
-        $Planet->setDeuterium(0);
+        $Planet->setMetal($params['metal']);
+        $Planet->setCrystal($params['crystal']);
+        $Planet->setDeuterium($params['deuterium']);
         $Planet->setCurrEnergy(0);
         $Planet->setMaxEnergy(0);
 
         // TODO -> CAMPOS OCUPADOS Y CAMPOS MÁXIMOS
+        $Planet->setCurrFields(0);
+        $Planet->setMaxFields(0); // FIXME -> 163 DE INICIO
         // TODO -> LUGAR DEL PLANETA POR DEFECTO
 
         $this->_em->persist($Planet);
@@ -44,7 +47,13 @@ class PlanetsRepository extends AbstractRepository
 
     public function generateFirstPlanet(UserEntity $User)
     {
-        $params = array('User' => $User, 'main' => true);
+        $params = array(
+            'User' => $User,
+            'main' => true,
+            'metal' => Config::INITIAL_METAL,
+            'crystal' => Config::INITIAL_CRYSTAL,
+            'deuterium' => Config::INITIAL_DEUTERIUM
+        );
         $this->_generatePlanet($params);
     }
 
