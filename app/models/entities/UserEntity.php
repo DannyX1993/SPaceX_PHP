@@ -3,6 +3,7 @@
 namespace models\entities;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -43,9 +44,19 @@ class UserEntity
     protected $password;
 
     /**
+     * @ORM\OneToMany(targetEntity="PlanetEntity", mappedBy="user")
+     */
+    protected $planets;
+
+    /**
      * @ORM\Column(type="boolean", nullable=false, options={"default":false})
      **/
     protected $holidaysMode;
+
+    public function __construct()
+    {
+        $this->planets = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -100,6 +111,25 @@ class UserEntity
     public function setHolidaysMode($bool)
     {
         $this->holidaysMode = $bool;
+    }
+
+    public function addPlanet(PlanetEntity $planetEntity)
+    {
+        $this->planets->add($planetEntity);
+    }
+
+    public function getPlanets()
+    {
+        return $this->planets;
+    }
+
+    public function getPlanet($id)
+    {
+        if (count($this->planets)) {
+            foreach ($this->planets as $planet) {
+                if ($planet->getId() == $id) return $planet;
+            }
+        }
     }
 
 }

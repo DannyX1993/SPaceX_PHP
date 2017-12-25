@@ -19,7 +19,7 @@ $app->group('/api', function () use ($app) {
     // Usuarios
     $app->group('/users', function () use ($app) {
         $app->get('/{id}', \api\UsersResource::class . ':data');
-        //$app->get('/{id}/planets', \api\UsersResource::class . ':data');
+        $app->get('/{id}/planets', \api\PlanetsResource::class . ':userPlanets');
     })->add(new \middlewares\JWTAuthenticationMiddleware());
 
     // Planetas
