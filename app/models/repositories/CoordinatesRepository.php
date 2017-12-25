@@ -45,7 +45,6 @@ class CoordinatesRepository extends AbstractRepository
                                     $lastGalaxy += 1;
                                     $lastSystem = 1;
                                     $lastPosition = 1;
-
                                     break;
                                 } else {
                                     $lastPosition = 1;
