@@ -36,10 +36,10 @@ class PlanetsRepository extends AbstractRepository
         $Planet->setDeuterium($params['deuterium']);
         $Planet->setCurrEnergy(0);
         $Planet->setMaxEnergy(0);
-
-        // TODO -> CAMPOS OCUPADOS Y CAMPOS MÁXIMOS
+        $Planet->setDiameter($params['diameter']);
         $Planet->setCurrFields(0);
         $Planet->setMaxFields(0); // FIXME -> 163 DE INICIO
+
         // TODO -> LUGAR DEL PLANETA POR DEFECTO
 
         $this->_em->persist($Planet);
@@ -50,6 +50,7 @@ class PlanetsRepository extends AbstractRepository
         $params = array(
             'User' => $User,
             'main' => true,
+            'diameter' => Config::INITIAL_DIAMETER,
             'metal' => Config::INITIAL_METAL,
             'crystal' => Config::INITIAL_CRYSTAL,
             'deuterium' => Config::INITIAL_DEUTERIUM

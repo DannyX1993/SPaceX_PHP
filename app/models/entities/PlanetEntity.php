@@ -63,6 +63,11 @@ class PlanetEntity
     protected $maxEnergy;
 
     /**
+     * @ORM\Column(type="integer", nullable=false, options={"default": 12800})
+     */
+    protected $diameter;
+
+    /**
      * @ORM\Column(type="integer", nullable=false, options={"default":0})
      **/
     protected $minTemp;
@@ -121,6 +126,11 @@ class PlanetEntity
     public function getMaxEnergy()
     {
         return $this->maxEnergy;
+    }
+
+    public function getDiameter()
+    {
+        return $this->diameter;
     }
 
     public function getMinTemp()
@@ -186,6 +196,11 @@ class PlanetEntity
     public function setMaxEnergy(float $energy)
     {
         $this->maxEnergy = $energy;
+    }
+
+    public function setDiameter(int $diameter)
+    {
+        $this->diameter = $diameter;
     }
 
     public function setMinTemp(int $temp)
