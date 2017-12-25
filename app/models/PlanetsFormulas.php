@@ -5,6 +5,11 @@ namespace models;
 class PlanetsFormulas
 {
 
+    public static function calculateDiameter($position, $isMain = false)
+    {
+
+    }
+
     public static function calculateMaxFields()
     {
         /*

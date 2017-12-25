@@ -87,6 +87,12 @@ class PlanetEntity
      **/
     protected $maxFields;
 
+    /**
+     * @ORM\OneToOne(targetEntity="CoordinatesEntity")
+     * @ORM\JoinColumn(name="coordinates_id", referencedColumnName="id")
+     */
+    protected $coordinates;
+
 
     public function getId()
     {
@@ -126,6 +132,11 @@ class PlanetEntity
     public function getMaxEnergy()
     {
         return $this->maxEnergy;
+    }
+
+    public function getCoordinates()
+    {
+        return $this->coordinates;
     }
 
     public function getDiameter()
@@ -196,6 +207,11 @@ class PlanetEntity
     public function setMaxEnergy(float $energy)
     {
         $this->maxEnergy = $energy;
+    }
+
+    public function setCoordinates(CoordinatesEntity $coordinates)
+    {
+        $this->coordinates = $coordinates;
     }
 
     public function setDiameter(int $diameter)

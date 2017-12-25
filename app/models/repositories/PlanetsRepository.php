@@ -18,11 +18,13 @@ class PlanetsRepository extends AbstractRepository
 {
 
     protected $_entity;
+    protected $_coordinatesRepository;
 
     public function __construct(EntityManager &$em)
     {
         parent::__construct($em);
         $this->_entity = $this->_em->getRepository('\models\entities\PlanetEntity');
+        $this->_coordinatesRepository = new CoordinatesRepository($this->_em);
     }
 
     protected function _generatePlanet(array $params)
@@ -39,17 +41,21 @@ class PlanetsRepository extends AbstractRepository
         $Planet->setDiameter($params['diameter']);
         $Planet->setCurrFields(0);
         $Planet->setMaxFields(0); // FIXME -> 163 DE INICIO
-
-        // TODO -> LUGAR DEL PLANETA POR DEFECTO
+        $Planet->setMinTemp(0); // FIXME
+        $Planet->setMaxTemp(0); // FIXME
+        $Planet->setCoordinates($params['Coordinates']);
 
         $this->_em->persist($Planet);
     }
 
     public function generateFirstPlanet(UserEntity $User)
     {
+        $Coordinates = $this->_coordinatesRepository->generateCoordinates();
+
         $params = array(
             'User' => $User,
             'main' => true,
+            'Coordinates' => $Coordinates,
             'diameter' => Config::INITIAL_DIAMETER,
             'metal' => Config::INITIAL_METAL,
             'crystal' => Config::INITIAL_CRYSTAL,
