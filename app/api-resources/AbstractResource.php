@@ -17,9 +17,16 @@ abstract class AbstractResource
         $this->_container = $c;
     }
 
-    protected function _getWrapper(ResponseInterface $response, string $wrapper, array $args, $format = 'json')
+    protected function _wrapperResponse(ResponseInterface $response, string $wrapper, array $args, string $format = 'json')
     {
-        $wrapperClass = '\\wrappers\\' . strtoupper($format) . $wrapper;
+        $Wrapper = $this->_getWrapper($wrapper, $args, $format);
+        $response->getBody()->write($Wrapper);
+        return $response->withStatus(200);
+    }
+
+    protected function _getWrapper(string $wrapper, array $args, string $format)
+    {
+        $wrapperClass = '\\wrappers\\' . strtoupper($format) . '\\' . strtoupper($format) . $wrapper;
         if (\class_exists($wrapperClass)) {
             $Wrapper = new $wrapperClass();
             if (count($args)) {
@@ -30,9 +37,8 @@ abstract class AbstractResource
                     } else throw new InvalidMethodWrapperException($key);
                 }
             }
-            $response->getBody()->write($Wrapper);
-            return $response->withStatus(200);
         } else throw new InvalidWrapperFormatException();
+        return $Wrapper;
     }
 
 }

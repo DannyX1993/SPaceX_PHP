@@ -5,7 +5,7 @@ namespace api;
 use Psr\Http\Message\ServerRequestInterface as ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface as ResponseInterface;
 use \api\exceptions\InvalidInfoAccessException as InvalidInfoAccessException;
-use \wrappers\UserWrapper as UserWrapper;
+use \config\Config as Config;
 
 class UsersResource extends AbstractResource
 {
@@ -18,6 +18,7 @@ class UsersResource extends AbstractResource
 
     public function data(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
+        $body = $request->getParsedBody();
         $tokenUserId = $request->getAttribute('userId');
         if (intval($args['id']) === $tokenUserId) { // Obtiene info de él mismo
             $User = $this->_controller->getUserData($args['id']);
@@ -27,7 +28,7 @@ class UsersResource extends AbstractResource
                 'nickname' => $User->getNickname(),
                 'email' => $User->getEmail(),
             );
-            return $this->_getWrapper($response, 'UserWrapper', $args, ($body['format']) ? $body['format'] : \config\Config::DEFAULT_FORMAT);
+            return $this->_wrapperResponse($response, 'UserWrapper', $args, ($body['format']) ? $body['format'] : Config::DEFAULT_FORMAT);
         } else {
             throw new InvalidInfoAccessException();
         }

@@ -1,6 +1,6 @@
 <?php
 
-namespace wrappers;
+namespace wrappers\JSON;
 
 
 class JSONUserPlanetsWrapper extends JSONWrapper

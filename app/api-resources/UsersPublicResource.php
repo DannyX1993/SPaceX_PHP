@@ -22,7 +22,7 @@ class UsersPublicResource extends AbstractResource
         $token = $this->_controller->login($body['user'], $body['pass']);
         if ($token !== null) {
             $args = array('token' => $token);
-            return $this->_getWrapper($response, 'TokenWrapper', $args, ($body['format']) ? $body['format'] : \config\Config::DEFAULT_FORMAT);
+            return $this->_wrapperResponse($response, 'TokenWrapper', $args, ($body['format']) ? $body['format'] : \config\Config::DEFAULT_FORMAT);
         } else throw new AuthorizationFailedException();
     }
 
@@ -37,7 +37,7 @@ class UsersPublicResource extends AbstractResource
                 'created' => $User->getCreated(),
                 'nickname' => $User->getNickname()
             );
-            return $this->_getWrapper($response, 'UserWrapper', $args, ($body['format']) ? $body['format'] : \config\Config::DEFAULT_FORMAT);
+            return $this->_wrapperResponse($response, 'UserWrapper', $args, ($body['format']) ? $body['format'] : \config\Config::DEFAULT_FORMAT);
         }
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace wrappers;
+namespace wrappers\XML;
 
 class XMLTokenWrapper extends XMLWrapper
 {
