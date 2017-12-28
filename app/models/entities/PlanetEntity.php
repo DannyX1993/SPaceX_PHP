@@ -89,7 +89,7 @@ class PlanetEntity
 
     /**
      * @ORM\OneToOne(targetEntity="CoordinatesEntity")
-     * @ORM\JoinColumn(name="coordinates_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="coordinates_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $coordinates;
 

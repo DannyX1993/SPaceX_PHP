@@ -1,6 +1,6 @@
 <?php
 
-namespace wrappers;
+namespace wrappers\JSON;
 
 abstract class JSONWrapper
 {

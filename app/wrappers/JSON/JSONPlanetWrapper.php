@@ -1,6 +1,6 @@
 <?php
 
-namespace wrappers;
+namespace wrappers\JSON;
 
 
 class JSONPlanetWrapper extends JSONWrapper
@@ -21,6 +21,18 @@ class JSONPlanetWrapper extends JSONWrapper
     protected $currEnergy;
 
     protected $maxEnergy;
+
+    protected $diameter;
+
+    protected $minTemp;
+
+    protected $maxTemp;
+
+    protected $currFields;
+
+    protected $maxFields;
+
+    protected $coordinates;
 
     public function __construct()
     {
@@ -66,6 +78,36 @@ class JSONPlanetWrapper extends JSONWrapper
         return $this->maxEnergy;
     }
 
+    public function getDiameter()
+    {
+        return $this->diameter;
+    }
+
+    public function getMinTemp()
+    {
+        return $this->minTemp;
+    }
+
+    public function getMaxTemp()
+    {
+        return $this->maxTemp;
+    }
+
+    public function getCurrFields()
+    {
+        return $this->currFields;
+    }
+
+    public function getMaxFields()
+    {
+        return $this->maxFields;
+    }
+
+    public function getCoordinates()
+    {
+        return $this->coordinates;
+    }
+
     public function setId($id)
     {
         $this->id = $id;
@@ -105,4 +147,36 @@ class JSONPlanetWrapper extends JSONWrapper
     {
         $this->maxEnergy = $energy;
     }
+
+    public function setDiameter($diameter)
+    {
+        $this->diameter = $diameter;
+    }
+
+    public function setMinTemp($minTemp)
+    {
+        $this->minTemp = $minTemp;
+    }
+
+    public function setMaxTemp($maxTemp)
+    {
+        $this->maxTemp = $maxTemp;
+    }
+
+    public function setCurrFields($currFields)
+    {
+        $this->currFields = $currFields;
+    }
+
+    public function setMaxFields($maxFields)
+    {
+        $this->maxFields = $maxFields;
+    }
+
+    public function setCoordinates($coordinates)
+    {
+        $this->coordinates = $coordinates;
+    }
+
+
 }

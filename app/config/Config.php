@@ -12,6 +12,7 @@ abstract class Config
     const GALAXY_MAX_SYSTEMS = 255;
     const SYSTEM_MAX_PLANETS = 15;
 
+    const PLANET_SIZE_MULTIPLIER = 1;
     const INITIAL_DIAMETER = 12800;
 
     const INITIAL_METAL = 500;

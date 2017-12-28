@@ -1,18 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: danielgonzalez
- * Date: 21/12/17
- * Time: 23:50
- */
 
 namespace models\repositories;
 
-use \Doctrine\ORM\EntityManager as EntityManager;
-use \models\entities\PlanetEntity;
-use \models\entities\UserEntity;
-
-use \config\Config as Config;
+use config\Config as Config;
+use Doctrine\ORM\EntityManager as EntityManager;
+use models\entities\PlanetEntity;
+use models\entities\UserEntity;
+use models\PlanetsMaker;
 
 class PlanetsRepository extends AbstractRepository
 {
@@ -31,19 +25,23 @@ class PlanetsRepository extends AbstractRepository
     {
         $Planet = new PlanetEntity();
         $Planet->setUser($params['User']);
-        $Planet->setName('Planet Principal');
+        $Planet->setName('Planet Principal'); // FIXME
         $Planet->setMain($params['main']);
+        $Planet->setCoordinates($params['Coordinates']);
+
         $Planet->setMetal($params['metal']);
         $Planet->setCrystal($params['crystal']);
         $Planet->setDeuterium($params['deuterium']);
         $Planet->setCurrEnergy(0);
         $Planet->setMaxEnergy(0);
-        $Planet->setDiameter($params['diameter']);
+
+        $Planet->setDiameter(PlanetsMaker::calculateDiameter($params['Coordinates']->getPosition(), $params['main']));
         $Planet->setCurrFields(0);
-        $Planet->setMaxFields(0); // FIXME -> 163 DE INICIO
-        $Planet->setMinTemp(0); // FIXME
-        $Planet->setMaxTemp(0); // FIXME
-        $Planet->setCoordinates($params['Coordinates']);
+        $Planet->setMaxFields(PlanetsMaker::calculateMaxFields($Planet->getDiameter()));
+
+        $temp = PlanetsMaker::calculateTemp($params['Coordinates']->getPosition());
+        $Planet->setMinTemp($temp['min']);
+        $Planet->setMaxTemp($temp['max']);
 
         $this->_em->persist($Planet);
     }
@@ -56,7 +54,6 @@ class PlanetsRepository extends AbstractRepository
             'User' => $User,
             'main' => true,
             'Coordinates' => $Coordinates,
-            'diameter' => Config::INITIAL_DIAMETER,
             'metal' => Config::INITIAL_METAL,
             'crystal' => Config::INITIAL_CRYSTAL,
             'deuterium' => Config::INITIAL_DEUTERIUM
