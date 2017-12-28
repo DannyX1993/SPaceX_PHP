@@ -27,9 +27,11 @@ class PlanetsResource extends AbstractResource
             $PlanetsWrapperArgs = [];
             if (count($planets)) {
                 foreach ($planets as $planet) {
-                    $coords = $planet->getCoordinates()->getGalaxy() . ':' .
-                        $planet->getCoordinates()->getSystem() . ':' .
-                        $planet->getCoordinates()->getPosition();
+                    // TODO -> MEJORA: WRAPPER COORDENADAS
+                    $Coordinates = $planet->getCoordinates();
+                    $coords = $Coordinates->getGalaxy() . ':' .
+                        $Coordinates->getSystem() . ':' .
+                        $Coordinates->getCoordinates()->getPosition();
 
                     $args = array(
                         'id' => $planet->getId(),
@@ -47,6 +49,7 @@ class PlanetsResource extends AbstractResource
                         'maxFields' => $planet->getMaxFields(),
                         'coordinates' => $coords,
                     );
+                    // TODO -> MEJORA: ¿QUE EN ESTE WRAPPER AL HACER SETCOORDS QUE CREE EL WRAPPER COORDS?
                     $PlanetWrapper = $this->_getWrapper('PlanetWrapper', $args, ($body['format']) ? $body['format'] : Config::DEFAULT_FORMAT);
                     array_push($PlanetsWrapperArgs, $PlanetWrapper);
                 }
