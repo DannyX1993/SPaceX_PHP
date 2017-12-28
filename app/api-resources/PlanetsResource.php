@@ -31,7 +31,7 @@ class PlanetsResource extends AbstractResource
                     $Coordinates = $planet->getCoordinates();
                     $coords = $Coordinates->getGalaxy() . ':' .
                         $Coordinates->getSystem() . ':' .
-                        $Coordinates->getCoordinates()->getPosition();
+                        $Coordinates->getPosition();
 
                     $args = array(
                         'id' => $planet->getId(),
@@ -55,6 +55,44 @@ class PlanetsResource extends AbstractResource
                 }
             }
             return $this->_wrapperResponse($response, 'UserPlanetsWrapper', array('planets' => $PlanetsWrapperArgs));
+        } else throw new InvalidInfoAccessException();
+    }
+
+    public function userPlanet(ServerRequestInterface $request, ResponseInterface $response, array $args)
+    {
+        $body = $request->getParsedBody();
+        $userId = $args['id'];
+        $planetId = $args['planetId'];
+        $tokenUserId = $request->getAttribute('userId');
+
+        if ($userId == $tokenUserId) {
+            $Planet = $this->_controller->getUserPlanet($userId, $planetId);
+
+            // TODO -> MEJORA: WRAPPER COORDENADAS
+            $Coordinates = $Planet->getCoordinates();
+            $coords = $Coordinates->getGalaxy() . ':' .
+                $Coordinates->getSystem() . ':' .
+                $Coordinates->getPosition();
+
+            $args = array(
+                'id' => $Planet->getId(),
+                'main' => $Planet->isMain(),
+                'name' => $Planet->getName(),
+                'metal' => $Planet->getMetal(),
+                'crystal' => $Planet->getCrystal(),
+                'deuterium' => $Planet->getDeuterium(),
+                'currEnergy' => $Planet->getCurrEnergy(),
+                'maxEnergy' => $Planet->getMaxEnergy(),
+                'diameter' => $Planet->getDiameter(),
+                'minTemp' => $Planet->getMinTemp(),
+                'maxTemp' => $Planet->getMaxTemp(),
+                'currFields' => $Planet->getCurrFields(),
+                'maxFields' => $Planet->getMaxFields(),
+                'coordinates' => $coords,
+                'resources' => $Planet->getResources()
+            );
+
+            return $this->_wrapperResponse($response, 'PlanetWrapper', $args, ($body['format']) ? $body['format'] : Config::DEFAULT_FORMAT);
         } else throw new InvalidInfoAccessException();
     }
 

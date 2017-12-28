@@ -93,6 +93,11 @@ class PlanetEntity
      */
     protected $coordinates;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ResourceEntity", mappedBy="planet", fetch="EXTRA_LAZY")
+     */
+    protected $resources;
+
 
     public function getId()
     {
@@ -162,6 +167,11 @@ class PlanetEntity
     public function getMaxFields()
     {
         return $this->maxFields;
+    }
+
+    public function getResources()
+    {
+        return $this->resources;
     }
 
     public function isMain()
@@ -242,6 +252,11 @@ class PlanetEntity
     public function setMain($bool)
     {
         $this->main = $bool;
+    }
+
+    public function setResources($resources)
+    {
+        $this->resources = $resources;
     }
 
 }

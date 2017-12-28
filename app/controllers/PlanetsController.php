@@ -12,4 +12,10 @@ class PlanetsController extends AbstractController
         return $planets;
     }
 
+    public function getUserPlanet($userId, $planetId)
+    {
+        $planet = $this->_repository->findByUserAndId($userId, $planetId);
+        return $planet;
+    }
+
 }

@@ -34,6 +34,8 @@ class JSONPlanetWrapper extends JSONWrapper
 
     protected $coordinates;
 
+    protected $resources;
+
     public function __construct()
     {
     }
@@ -108,6 +110,11 @@ class JSONPlanetWrapper extends JSONWrapper
         return $this->coordinates;
     }
 
+    public function getResources()
+    {
+        return $this->resources;
+    }
+
     public function setId($id)
     {
         $this->id = $id;
@@ -178,5 +185,9 @@ class JSONPlanetWrapper extends JSONWrapper
         $this->coordinates = $coordinates;
     }
 
+    public function setResources($resources)
+    {
+        $this->resources = $resources;
+    }
 
 }

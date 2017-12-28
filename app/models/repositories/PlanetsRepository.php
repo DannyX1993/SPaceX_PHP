@@ -66,4 +66,13 @@ class PlanetsRepository extends AbstractRepository
         $planets = $this->_entity->findBy(array('user' => $userId));
         return $planets;
     }
+
+    public function findByUserAndId($userId, $planetId)
+    {
+        $planet = $this->_entity->findOneBy(array('user' => $userId, 'id' => $planetId));
+
+        // TODO -> INSTANCIAR GameResourcesList y obtener los niveles por sección
+
+        return $planet;
+    }
 }
